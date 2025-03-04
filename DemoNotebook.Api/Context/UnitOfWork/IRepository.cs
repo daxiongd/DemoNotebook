@@ -9,7 +9,7 @@
     using Microsoft.EntityFrameworkCore.Query;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.EntityFrameworkCore;
-    using DemoNotebook.Shared.Contact;
+    using DemoNotebook.Shared.Contract;
 
     /// <summary>
     /// Defines the interfaces for generic repository.

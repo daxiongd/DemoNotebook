@@ -1,5 +1,5 @@
 ﻿using DemoNotebook.Api.Context;
-using DemoNotebook.Api.Servies;
+using DemoNotebook.Api.Services;
 using DemoNotebook.Shared.DTO;
 using DemoNotebook.Shared.Parameters;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-﻿namespace DemoNotebook.Api.Servies
+﻿namespace DemoNotebook.Api.Services
 {
     public class ApiResponse
     {

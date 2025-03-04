@@ -6,7 +6,7 @@ using DemoNotebook.Shared.Parameters;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing.Tree;
 
-namespace DemoNotebook.Api.Servies
+namespace DemoNotebook.Api.Services
 {
     /// <summary>
     /// 待办事项的实现

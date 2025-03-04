@@ -1,4 +1,4 @@
-﻿namespace DemoNotebook.Shared.Contact
+﻿namespace DemoNotebook.Shared.Contract
 {
     using System;
     using System.Collections.Generic;

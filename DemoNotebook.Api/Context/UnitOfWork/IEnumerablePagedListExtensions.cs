@@ -1,7 +1,7 @@
 ﻿
 namespace DemoNotebook.Api
 {
-    using DemoNotebook.Shared.Contact;
+    using DemoNotebook.Shared.Contract;
     using System;
     using System.Collections.Generic;
 

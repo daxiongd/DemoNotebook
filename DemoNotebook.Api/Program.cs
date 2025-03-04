@@ -2,7 +2,7 @@ using DemoNotebook.Api;
 using DemoNotebook.Api.Context;
 using DemoNotebook.Api.Context.Repository;
 using DemoNotebook.Api.Extension;
-using DemoNotebook.Api.Servies;
+using DemoNotebook.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -19,6 +19,7 @@ builder.Services.AddDbContext<MyContext>(option =>
 //通过 AddTransient，你将 IToDoService 注册为 ToDoService，这意味着当你在代码中注入 IToDoService 时，实际上会使用 ToDoService 的实例。
 builder.Services.AddTransient <IToDoService,ToDoService>();
 builder.Services.AddTransient <IMemoService,MemoService>();
+builder.Services.AddTransient <ILoginService,LoginService>();
 //注册automapper
 builder.Services.AddAutoMapper(typeof(Program));
 // Add services to the container.

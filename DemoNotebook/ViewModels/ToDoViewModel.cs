@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DemoNotebook.Models;
+using DemoNotebook.Shared.DTO;
 using DemoNotebook.Views;
 
 namespace DemoNotebook.ViewModels

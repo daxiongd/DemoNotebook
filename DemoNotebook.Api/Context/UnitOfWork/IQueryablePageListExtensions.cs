@@ -5,7 +5,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using DemoNotebook.Shared.Contact;
+    using DemoNotebook.Shared.Contract;
 
     public static class IQueryablePageListExtensions
     {

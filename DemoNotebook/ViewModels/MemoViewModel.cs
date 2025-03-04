@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using DemoNotebook.Models;
+using DemoNotebook.Shared.DTO;
 
 namespace DemoNotebook.ViewModels
 {

@@ -10,7 +10,7 @@ namespace DemoNotebook.Api.Extension
         {
             CreateMap<ToDo,ToDoDTO>().ReverseMap();
             CreateMap<Memo,MemoDTO>().ReverseMap();
-
+            CreateMap<User,UserDto>().ReverseMap();
 
         }
     }

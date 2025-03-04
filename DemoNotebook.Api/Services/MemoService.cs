@@ -6,7 +6,7 @@ using DemoNotebook.Shared.DTO;
 using DemoNotebook.Shared.Parameters;
 using Microsoft.AspNetCore.Routing.Tree;
 
-namespace DemoNotebook.Api.Servies
+namespace DemoNotebook.Api.Services
 {
     /// <summary>
     /// 备忘录的实现

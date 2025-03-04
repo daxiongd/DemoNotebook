@@ -1,5 +1,5 @@
 ﻿using DemoNotebook.Shared.Parameters;
-namespace DemoNotebook.Api.Servies
+namespace DemoNotebook.Api.Services
 {
     public interface IBaseService<T>
     {

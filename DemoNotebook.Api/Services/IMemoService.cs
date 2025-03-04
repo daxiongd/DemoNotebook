@@ -1,7 +1,7 @@
 ﻿using DemoNotebook.Api.Context;
 using DemoNotebook.Shared.DTO;
 
-namespace DemoNotebook.Api.Servies
+namespace DemoNotebook.Api.Services
 {
     public interface IMemoService : IBaseService<MemoDTO>
     {
