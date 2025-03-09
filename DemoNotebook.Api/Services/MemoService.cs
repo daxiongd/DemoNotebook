@@ -2,6 +2,7 @@
 using System.Reflection.Metadata;
 using AutoMapper;
 using DemoNotebook.Api.Context;
+using DemoNotebook.Shared.Contract;
 using DemoNotebook.Shared.DTO;
 using DemoNotebook.Shared.Parameters;
 using Microsoft.AspNetCore.Routing.Tree;
@@ -31,7 +32,7 @@ namespace DemoNotebook.Api.Services
                 await _unitOfWork.GetRepository<Memo>().InsertAsync(Entity);
                 if (await _unitOfWork.SaveChangesAsync() > 0)
                 {
-                    return new ApiResponse(model, true);
+                    return new ApiResponse( true, model);
                 }
                 return new ApiResponse("添加数据失败");
             }
@@ -66,18 +67,18 @@ namespace DemoNotebook.Api.Services
 
         }
 
-        public async Task<ApiResponse> GetAllAsync(QueryParameter parameter)
+        public async Task<ApiResponse> GetAllAsync(MyQueryParameter parameter)
         {
             try
             {
-                var memos = await _unitOfWork.GetRepository<ToDo>().GetPagedListAsync(predicate:
+                var memos = await _unitOfWork.GetRepository<Memo>().GetPagedListAsync(predicate:
                     x => string.IsNullOrWhiteSpace(parameter.Search) || x.Title.Equals(parameter.Search),
                     pageIndex: parameter.PageIndex,
                     pageSize: parameter.PageSize,
                     orderBy: source => source.OrderByDescending(x => x.CreateTime)
                 );
               
-                return new ApiResponse(memos, true);
+                return new ApiResponse(true, memos);
 
             }
             catch (Exception ex)
@@ -93,7 +94,7 @@ namespace DemoNotebook.Api.Services
             {
                 var entity = await _unitOfWork.GetRepository<Memo>().GetFirstOrDefaultAsync(predicate:x=>x.Id.Equals(id));
 
-                return new ApiResponse(entity, true);
+                return new ApiResponse(true, entity);
 
             }
             catch (Exception ex)

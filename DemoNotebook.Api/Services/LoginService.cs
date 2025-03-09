@@ -3,6 +3,7 @@ using DemoNotebook.Api;
 using DemoNotebook.Api.Context;
 using DemoNotebook.Api.Services;
 using DemoNotebook.Shared;
+using DemoNotebook.Shared.Contract;
 using DemoNotebook.Shared.DTO;
 using MD5Hash;
 using System;
@@ -36,12 +37,12 @@ namespace DemoNotebook.Api.Services
                 if (model == null)
                     return new ApiResponse("账号或密码错误,请重试！");
 
-                return new ApiResponse( new UserDto()
+                return new ApiResponse(true, new UserDto()
                 {
                     Account = model.Account,
                     UserName = model.UserName,
                     Id = model.Id
-                },true);
+                });
             }
             catch (Exception ex)
             {
@@ -65,7 +66,7 @@ namespace DemoNotebook.Api.Services
                 await repository.InsertAsync(model);
 
                 if (await work.SaveChangesAsync() > 0)
-                    return new ApiResponse( model,true);
+                    return new ApiResponse(true, model);
 
                 return new ApiResponse("注册失败,请稍后重试！");
             }

@@ -1,5 +1,6 @@
 ﻿using DemoNotebook.Api.Context;
 using DemoNotebook.Api.Services;
+using DemoNotebook.Shared.Contract;
 using DemoNotebook.Shared.DTO;
 using DemoNotebook.Shared.Parameters;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace DemoNotebook.Api.Controllers
         public async Task<ApiResponse> Get(int id)=> await _toDoService.GetSingleAsync(id);
         [HttpGet]
 
-        public async Task<ApiResponse> GetAll([FromQuery] QueryParameter parameter)=> await _toDoService.GetAllAsync(parameter);
+        public async Task<ApiResponse> GetAll([FromQuery] MyQueryParameter parameter)=> await _toDoService.GetAllAsync(parameter);
         [HttpPost]
 
         public async Task<ApiResponse> Add([FromBody] ToDoDTO todo) => await _toDoService.AddAsync(todo);

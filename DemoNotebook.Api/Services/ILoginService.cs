@@ -1,4 +1,5 @@
 ﻿using DemoNotebook.Api.Services;
+using DemoNotebook.Shared.Contract;
 using DemoNotebook.Shared.DTO;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using DemoNotebook.Api.Context;
+using DemoNotebook.Shared.Contract;
 using DemoNotebook.Shared.DTO;
 using DemoNotebook.Shared.Parameters;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -31,7 +32,7 @@ namespace DemoNotebook.Api.Services
                 await _unitOfWork.GetRepository<ToDo>().InsertAsync(todoEntity);
                 if (await _unitOfWork.SaveChangesAsync() > 0)
                 {
-                    return new ApiResponse(model, true);
+                    return new ApiResponse(true, model);
                 }
                 return new ApiResponse("添加数据失败");
             }
@@ -66,18 +67,18 @@ namespace DemoNotebook.Api.Services
 
         }
 
-        public async Task<ApiResponse> GetAllAsync(QueryParameter parameter)
+        public async Task<ApiResponse> GetAllAsync(MyQueryParameter parameter)
         {
             try
             {
                 
                 var toDos = await _unitOfWork.GetRepository<ToDo>().GetPagedListAsync(predicate:
-                    x=>string.IsNullOrWhiteSpace(parameter.Search)?true:x.Title.Equals(parameter.Search),
+                    x=>string.IsNullOrWhiteSpace(parameter.Search)?true:x.Title.Contains(parameter.Search),
                 pageIndex:parameter.PageIndex,
                 pageSize:parameter.PageSize,
                 orderBy:source=> source.OrderByDescending(x => x.CreateTime)
                 ); 
-                    return new ApiResponse(toDos, true);
+                    return new ApiResponse(true, toDos);
 
             }
             catch (Exception ex)
@@ -86,6 +87,7 @@ namespace DemoNotebook.Api.Services
                 return new ApiResponse(ex.Message);
             }
         }
+     
 
         public async Task<ApiResponse> GetSingleAsync(int id)
         {
@@ -93,7 +95,7 @@ namespace DemoNotebook.Api.Services
             {
                 var toDo = await _unitOfWork.GetRepository<ToDo>().GetFirstOrDefaultAsync(predicate:x=>x.Id.Equals(id));
 
-                return new ApiResponse(toDo, true);
+                return new ApiResponse(true, toDo);
 
             }
             catch (Exception ex)

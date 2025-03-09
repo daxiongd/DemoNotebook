@@ -1,5 +1,6 @@
 ﻿using DemoNotebook.Shared.Contract;
 using DemoNotebook.Shared.Parameters;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,58 +11,51 @@ namespace DemoNotebook.Service
 {
     public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class
     {
-        private readonly HttpRestClient client;
+        
         private readonly string serviceName;
+        private readonly IApiClient _restSharpApiClient;
 
-        public BaseService(HttpRestClient client, string serviceName)
+        public BaseService(IApiClient restSharpApiClient, string serviceName)
         {
-            this.client = client;
+            
             this.serviceName = serviceName;
+            this._restSharpApiClient = restSharpApiClient;
         }
 
 
         public async Task<ApiResponse<TEntity>> AddAsync(TEntity entity)
         {
-            BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Post;
-            request.Route = $"api/{serviceName}/Add";
-            request.Parameter = entity;
-            return await client.ExecuteAsync<TEntity>(request);
+            RestRequest request = new RestRequest($"api/{serviceName}/Add").AddJsonBody(entity);
+            string route = $"api/{serviceName}/Add";
+            return await _restSharpApiClient.GetAsync<TEntity>(route, entity);
         }
 
         public async Task<ApiResponse> DeleteAsync(int id)
         {
-            BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Delete;
-            request.Route = $"api/{serviceName}/Delete?id={id}";
-            return await client.ExecuteAsync(request);
+          
+            string route = $"api/{serviceName}/Delete?id={id}";
+            return await _restSharpApiClient.DeleteAsync(route);
         }
 
-        public async Task<ApiResponse<PagedList<TEntity>>> GetAllAsync(QueryParameter parameter)
+        public async Task<ApiResponse<PagedList<TEntity>>> GetAllAsync(MyQueryParameter parameter)
         {
-            BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Get;
-            request.Route = $"api/{serviceName}/GetAll?pageIndex={parameter.PageIndex}" +
-                $"&pageSize={parameter.PageSize}" +
-                $"&search={parameter.Search}";
-            return await client.ExecuteAsync<PagedList<TEntity>>(request);
+
+            string route = $"api/{serviceName}/GetAll";
+            return await _restSharpApiClient.GetAsync<PagedList<TEntity>>(route, parameter);
         }
 
         public async Task<ApiResponse<TEntity>> GetFirstOfDefaultAsync(int id)
         {
-            BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Get;
-            request.Route = $"api/{serviceName}/Get?id={id}";
-            return await client.ExecuteAsync<TEntity>(request);
+           
+            string route = $"api/{serviceName}/Get?id={id}";
+            return await _restSharpApiClient.GetAsync<TEntity>(route);
         }
 
         public async Task<ApiResponse<TEntity>> UpdateAsync(TEntity entity)
         {
-            BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Post;
-            request.Route = $"api/{serviceName}/Update";
-            request.Parameter = entity;
-            return await client.ExecuteAsync<TEntity>(request);
+            
+            string route = $"api/{serviceName}/Update";
+            return await _restSharpApiClient.PostAsync<TEntity>(route,entity);
         }
     }
 }

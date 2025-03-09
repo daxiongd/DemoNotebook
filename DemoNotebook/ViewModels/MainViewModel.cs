@@ -53,10 +53,10 @@ namespace DemoNotebook.ViewModels
 
         void CreateMenuBar()
         {
-            MenuBars.Add(new MenuBar { Icon = "Home", Title = "首页", TargetView = "IndexView" });
-            MenuBars.Add(new MenuBar { Icon = "Notebook", Title = "备忘录", TargetView = "MemoView" });
-            MenuBars.Add(new MenuBar { Icon = "NotebookEditOutline", Title = "待办事项", TargetView = "ToDoView" });
-            MenuBars.Add(new MenuBar { Icon = "Cog", Title = "设置", TargetView = "SettingsView" });
+            MenuBars.Add(new MenuBar { Icon = "Home", Title = "首页", TargetView = "index" });
+            MenuBars.Add(new MenuBar { Icon = "Notebook", Title = "备忘录", TargetView = "memo" });
+            MenuBars.Add(new MenuBar { Icon = "NotebookEditOutline", Title = "待办事项", TargetView = "todo" });
+            MenuBars.Add(new MenuBar { Icon = "Cog", Title = "设置", TargetView = "settings" });
         }
 
         public MainViewModel(IRegionManager regionManager)
@@ -79,10 +79,7 @@ namespace DemoNotebook.ViewModels
                     journal.GoForward();
                 }
             });
-            //System.Diagnostics.Debug.WriteLine("MainViewModel 已初始化，RegionManager 是否为 null: " + (regionManager == null));
-            //var region = regionManager.Regions.ContainsRegionWithName(PrismManager.MainViewRegion);
-            //object oj = regionManager.Regions.GetType();
-            //System.Diagnostics.Debug.WriteLine($"区域 {PrismManager.MainViewRegion} 是否存在: {region}");
+         
         }
     }
 }

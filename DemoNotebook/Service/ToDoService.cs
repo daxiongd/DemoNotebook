@@ -2,6 +2,7 @@
 using DemoNotebook.Shared.Contract;
 using DemoNotebook.Shared.DTO;
 using DemoNotebook.Shared.Parameters;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,29 +13,27 @@ namespace DemoNotebook.Service
 {
     public class ToDoService : BaseService<ToDoDTO>, IToDoService
     {
-        private readonly HttpRestClient client;
+        private readonly IApiClient _restSharpApiClient;
 
-        public ToDoService(HttpRestClient client) : base(client, "ToDo")
+        public ToDoService(IApiClient restSharpApiClient) : base(restSharpApiClient, "ToDoControl")
         {
-            this.client = client;
+            this._restSharpApiClient = restSharpApiClient;
+
         }
 
-        public async Task<ApiResponse<PagedList<ToDoDTO>>> GetAllFilterAsync(ToDoParameter parameter)
+        public async Task<ApiResponse<PagedList<ToDoDTO>>> GetAllFilterAsync(MyQueryParameter parameter)
         {
-            BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Get;
-            request.Route = $"api/ToDo/GetAll?pageIndex={parameter.PageIndex}" +
-                $"&pageSize={parameter.PageSize}" +
-                $"&search={parameter.Search}" +
-                $"&status={parameter.Status}";
-            return await client.ExecuteAsync<PagedList<ToDoDTO>>(request);
+            string route = $"api/ToDoControl/GetAll";
+            return await _restSharpApiClient.GetAsync<PagedList<ToDoDTO>>(route,parameter);
         }
+
 
         public async Task<ApiResponse<SummaryDto>> SummaryAsync()
         {
-            BaseRequest request = new BaseRequest();
-            request.Route = "api/ToDo/Summary";
-            return await client.ExecuteAsync<SummaryDto>(request);
+            //return await client.ExecuteAsync<SummaryDto>(request);
+          
+            string route = $"api/ToDoControl/Summary";
+            return await _restSharpApiClient.GetAsync<SummaryDto>(route);
         }
     }
 }

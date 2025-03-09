@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DemoNotebook.Shared.Parameters
 {
-    public class ToDoParameter : QueryParameter
+    public class ToDoParameter : MyQueryParameter
     {
         public int? Status { get; set; }
     }

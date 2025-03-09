@@ -5,14 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DemoNotebook.Models;
+using DemoNotebook.Service;
 using DemoNotebook.Shared.DTO;
+using DemoNotebook.Shared.Parameters;
 using DemoNotebook.Views;
+using MaterialDesignColors;
 
 namespace DemoNotebook.ViewModels
 {
     class ToDoViewModel:BindableBase
     {
         public DelegateCommand GoBackCommand { get; set; }
+        private readonly IToDoService _service;
+
         public DelegateCommand GoForwardCommand { get; set; }
         private IRegionNavigationJournal journal;
 
@@ -34,7 +39,7 @@ namespace DemoNotebook.ViewModels
 			set { toDoDTOs = value;RaisePropertyChanged(); }
 		}
         public DelegateCommand AddCommand { get; set; }
-        public ToDoViewModel()
+        public ToDoViewModel(IToDoService service)
         {
             ToDoDTOs = new ObservableCollection<ToDoDTO>();
             AddCommand = new DelegateCommand(Add);
@@ -52,6 +57,7 @@ namespace DemoNotebook.ViewModels
                     journal.GoForward();
                 }
             });
+            this._service = service;
             createToDoData();
         }
 
@@ -60,13 +66,33 @@ namespace DemoNotebook.ViewModels
             IsRightDrawerOpen = true;
         }
 
-        private void createToDoData()
+        async void createToDoData()
         {
-            for (int i = 0; i < 20; i++)
+            try
             {
-              ToDoDTOs.Add(new ToDoDTO() { Title = "代办" + i, Content = "测试数据" + i, Status = 0 });
+                var todoResult = await _service.GetAllFilterAsync(new Shared.Parameters.ToDoParameter()
+                {
+                    PageIndex = 0,
+                    PageSize = 100,
+
+                });
+
+                if (todoResult.IsSuccess)
+                {
+                    toDoDTOs.Clear();
+                    foreach (var item in todoResult.Result.Items)
+                    {
+                        toDoDTOs.Add(item);
+                    }
+                }
             }
-           
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("请求todo报错了++++++++++++++++++++++++++"+ ex.Message);
+            }
+       
         }
+    
     }
 }

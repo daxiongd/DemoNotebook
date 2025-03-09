@@ -18,6 +18,6 @@ namespace DemoNotebook.Service
 
         Task<ApiResponse<TEntity>> GetFirstOfDefaultAsync(int id);
 
-        Task<ApiResponse<PagedList<TEntity>>> GetAllAsync(QueryParameter parameter);
+        Task<ApiResponse<PagedList<TEntity>>> GetAllAsync(MyQueryParameter parameter);
     }
 }

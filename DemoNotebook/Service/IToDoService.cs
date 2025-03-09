@@ -11,7 +11,7 @@ namespace DemoNotebook.Service
 {
     public interface IToDoService : IBaseService<ToDoDTO>
     {
-        Task<ApiResponse<PagedList<ToDoDTO>>> GetAllFilterAsync(ToDoParameter parameter);
+        Task<ApiResponse<PagedList<ToDoDTO>>> GetAllFilterAsync(MyQueryParameter parameter);
 
         Task<ApiResponse<SummaryDto>> SummaryAsync();
     }

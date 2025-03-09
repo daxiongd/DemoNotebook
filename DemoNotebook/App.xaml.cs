@@ -5,6 +5,8 @@ using System.Windows.Automation.Peers;
 using DemoNotebook.Service;
 using DemoNotebook.ViewModels;
 using DemoNotebook.Views;
+using Example;
+using Microsoft.Extensions.Options;
 using Prism.Ioc;
 using RestSharp;
 using RestSharp.Serializers.Json;
@@ -26,25 +28,31 @@ namespace DemoNotebook
         {
             //containerRegistry.GetContainer().Register<HttpRestClient>(made:Parameters.Of.Type<string>(serviceKey:"webUrl"));
             //containerRegistry.GetContainer().RegisterInstance(@"http://localhost:5000",serviceKey:"webUrl");
-            var restClientOptions = new RestClientOptions("http://localhost:5000")
+            var restClientOptions = new RestClientOptions("https://localhost:44367")
             {
                 Timeout = TimeSpan.FromSeconds(30), // 30秒超时
-                ThrowOnAnyError = true
+                //ThrowOnAnyError = true
             };
-
-            var restClient = new RestClient(
+        
+            containerRegistry.RegisterSingleton<RestClient>(() => new RestClient(
                 options: restClientOptions,
                 configureSerialization: s => s.UseSystemTextJson() // 使用 System.Text.Json
-            );
-            containerRegistry.RegisterInstance<IRestClient>(restClient); // 通过接口注册
+            ));
 
+            containerRegistry.Register<IApiClient, RestSharpApiClient>();
+            // 注册服务层
+
+            containerRegistry.Register<IToDoService, ToDoService>();
+            containerRegistry.Register<IMemoService, MemoService>();
             containerRegistry.RegisterForNavigation<MainView, MainViewModel>();
             // 显式指定导航名称（与 MenuBar.TargetView 匹配）
-            containerRegistry.RegisterForNavigation<IndexView>("IndexView");
-            containerRegistry.RegisterForNavigation<SettingsSkinView>("SettingsSkinView");
-            containerRegistry.RegisterForNavigation<ToDoView>("ToDoView");
-            containerRegistry.RegisterForNavigation<MemoView>("MemoView");
-            containerRegistry.RegisterForNavigation<SettingsView>("SettingsView");
+            containerRegistry.RegisterForNavigation<IndexView>("index");
+            containerRegistry.RegisterForNavigation<SettingsSkinView>("settingsSkin");
+            containerRegistry.RegisterForNavigation<ToDoView>("todo");
+            containerRegistry.RegisterForNavigation<MemoView>("memo");
+            containerRegistry.RegisterForNavigation<SettingsView>("settings");
+
+       
         }
 
     }
