@@ -10,3 +10,4 @@
 - Microsoft.EntityFrameworkCore.Tools 9.0.2
 - Microsoft.EntityFrameworkCore.Sqlite 9.0.2
 - AutoMapper 14.0.0
+- RestSharp 112
